@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include <vector>
 #include <sstream>
@@ -17,7 +19,7 @@ std::vector<std::string> splitByDelimiter(std::string const& input, char const& 
     return words;
 }
 
-std::string getHttpHeader(std::string const& input)
+std::string getHttpRequestHeader(std::string const& input)
 {
     std::string str2find ("\n\n");
     std::size_t pos = input.find(str2find);
@@ -29,7 +31,7 @@ std::string getHttpHeader(std::string const& input)
     }
 }
 
-std::string getHttpBody(std::string const& input)
+std::string getHttpRequestBody(std::string const& input)
 {
     std::string str2find("\n\n");
     std::size_t pos = input.find(str2find);

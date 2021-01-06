@@ -18,7 +18,7 @@ void* cthread(void* arg) {
     struct cln* c = (struct cln*)arg;
     printf("new connection: %s", inet_ntoa((struct in_addr)c->caddr.sin_addr));
     
-    // 1450 due to MTU
+    // 1450 due to TCP MTU
     char buffer[1450];
     read(c->cfd, buffer, 1450);
     std::string request {buffer};
