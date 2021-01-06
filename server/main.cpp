@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include <pthread.h>
 #include "httpRequest.cpp"
+#include "stringHelper.cpp"
 
 constexpr int SERVER_PORT = 1234;
 
@@ -22,10 +23,12 @@ void* cthread(void* arg) {
     char buffer[1450];
     read(c->cfd, buffer, 1450);
     std::string request {buffer};
+    own::findAndReplaceAll(request, "\r\n", "\n");
 
     // printf("  |  Recived msg: %s\n", buffer);
     std::cout << "  |  Recived msg: " << request << "\n";
     std::string response = own::proceedRequest(request);
+    own::findAndReplaceAll(response, "\n", "\r\n");
 
     write(c->cfd, response.c_str(), response.size());
     close(c->cfd);

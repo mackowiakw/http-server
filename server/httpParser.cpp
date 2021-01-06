@@ -33,11 +33,11 @@ std::string getHttpRequestHeader(std::string const& input)
 
 std::string getHttpRequestBody(std::string const& input)
 {
-    std::string str2find("\n\n");
+    std::string str2find ("\n\n");
     std::size_t pos = input.find(str2find);
 
     if (pos != std::string::npos) {
-        return input.substr(pos + 2);
+        return input.substr(pos + str2find.length());
     } else {
         return "";
     }
