@@ -18,21 +18,16 @@ struct cln
 void *cthread(void *arg)
 {
     struct cln *c = (struct cln *)arg;
-    // printf("new connection: %s", inet_ntoa((struct in_addr)c->caddr.sin_addr));
 
     // 1450 due to TCP MTU
-    char buffer[1450];
+    char buffer[1450] = {};
     read(c->cfd, buffer, 1450);
     std::string request{buffer};
-    own::findAndReplaceAll(request, "\r\n", "\n");
+    request = own::findAndReplaceAll(request, "\r\n", "\n");
 
-    // printf("  |  Recived msg: %s\n", buffer);
-    std::cout << std::endl
-              << std::endl
-              << std::endl
-              << request << std::endl;
+    std::cout << own::splitByDelimiter(request, '\n').at(0) << "\n";
     std::string response = own::proceedRequest(request);
-    own::findAndReplaceAll(response, "\n", "\r\n");
+    response = own::findAndReplaceAll(response, "\n", "\r\n");
 
     write(c->cfd, response.c_str(), response.size());
     close(c->cfd);
