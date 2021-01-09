@@ -7,7 +7,7 @@
 namespace own
 {
 
-    std::string getHttpRequestHeader(std::string const& input)
+    std::string getHttpRequestHeaders(std::string const& input)
     {
         std::string str2find("\n\n");
         std::size_t pos = input.find(str2find);
