@@ -6,12 +6,12 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
-                "${file}",
+                "server/main.cpp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}",
+                "bin/server.out",
                 "-lpthread",
+                "-std=c++17",
                 "-Wall",
-                "-std=c++17"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

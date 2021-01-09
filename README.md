@@ -1,18 +1,49 @@
 # http-server
-Simple HTTP server
+Simple HTTP server for Linux written in C++
 
-## Compilation
+<!-- Client for Windows written in C# -->
+### Usage:
 
-Server (Linux):
-`g++ server/main.cpp -o bin/server.out -Wall -lpthread -std=c++17`
+Clone this repository:
 
-Client (Windows):
-`gcc client/client.c -o bin/client.exe -Wall -lwsock32`
+```
+git clone https://github.com/mackowiakw/http-server.git
 
-## Usage
+cd http-server
+```
 
-Server:
-`./bin/server.out`
+### Server (Fastest way - VS Code):
 
-Client:
-`./bin/client.exe`
+Only if you're using Windows and you have WSL installed:
+
+```
+wsl
+```
+
+Otherwise skip this command and continue in Linux shell. Then open in VS Code:
+
+```
+code .
+```
+
+And just hit **F5**. Server is now available at: http://localhost:1234
+
+
+
+### You can compile it also manually:
+
+```
+g++ server/main.cpp -o bin/server.out -Wall -lpthread -std=c++17
+
+./bin/server.out
+```
+
+
+
+### Windows client (with hardcoded request URL XD):
+
+```
+gcc client/client.c -o bin/client.exe -Wall -lwsock32
+
+./bin/client.exe
+```
