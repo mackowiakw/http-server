@@ -4,7 +4,7 @@ Simple HTTP server
 ## Compilation
 
 Server (Linux):
-`g++ server/main.cpp -o bin/server.out -Wall -lpthread`
+`g++ server/main.cpp -o bin/server.out -Wall -lpthread -std=c++17`
 
 Client (Windows):
 `gcc client/client.c -o bin/client.exe -Wall -lwsock32`

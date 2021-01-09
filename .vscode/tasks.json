@@ -10,7 +10,8 @@
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-lpthread",
-                "-Wall"
+                "-Wall",
+                "-std=c++17"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
