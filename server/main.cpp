@@ -7,8 +7,7 @@
 #include <pthread.h>
 #include "httpRequest.cpp"
 #include "stringHelper.cpp"
-
-constexpr int SERVER_PORT = 1234;
+#include "config.hpp"
 
 struct cln
 {
