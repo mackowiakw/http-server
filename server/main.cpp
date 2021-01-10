@@ -1,13 +1,17 @@
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <string.h>
 #include <arpa/inet.h>
 #include <pthread.h>
+
+#include "config.hpp"
 #include "httpRequest.cpp"
 #include "stringHelper.cpp"
-#include "config.hpp"
 
 struct cln
 {
@@ -22,12 +26,34 @@ void *cthread(void *arg)
     // 1450 due to TCP MTU
     char buffer[1450] = {};
     read(c->cfd, buffer, 1450);
-    std::string request{buffer};
-    request = own::findAndReplaceAll(request, "\r\n", "\n");
+    std::stringstream firstPacket{buffer};
 
-    std::cout << own::splitByDelimiter(request, '\n').at(0) << "\n";
-    std::string response = own::proceedRequest(request);
-    response = own::findAndReplaceAll(response, "\n", "\r\n");
+    size_t contentLength = 0;
+
+    // Read Content-Length from the first TCP packet
+    // If not header not provided equals 0
+    std::string line;
+    while (std::getline(firstPacket, line))
+    {
+        auto words = own::splitByDelimiter(line, ' ');
+        if (words.at(0) == "Content-Length:")
+        {
+            contentLength = std::stoi(words.at(1));
+            break;
+        }
+    };
+
+    std::string request{firstPacket.str()};
+
+    // Read entire request body
+    while (own::getBodySizeFromRawRequest(request) < contentLength)
+    {
+        char buffer[1450] = {};
+        read(c->cfd, buffer, 1450);
+        request += buffer;
+    }
+
+    const auto response = own::proceedRequest(request);
 
     write(c->cfd, response.c_str(), response.size());
     close(c->cfd);
@@ -37,6 +63,8 @@ void *cthread(void *arg)
 
 int main(int argc, char **argv)
 {
+    std::cout << "Server is running at: http://localhost:" << SERVER_PORT << "\n" << std::flush;
+
     pthread_t tid;
     socklen_t slt;
     int sfd, on = 1;

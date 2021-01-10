@@ -4,7 +4,10 @@
 #include <filesystem>
 #include <string>
 #include <sstream>
+
 #include "config.hpp"
+#include "httpRequest.cpp"
+#include "httpResponse.cpp"
 #include "stringHelper.cpp"
 
 namespace own

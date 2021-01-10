@@ -1,13 +1,23 @@
 #pragma once
 
+#include <iostream>
 #include <string>
+#include <sstream>
 #include <vector>
+
 #include "stringHelper.cpp"
 #include "httpMethods.cpp"
+#include "httpResponse.cpp"
 #include "config.hpp"
 
 namespace own
 {
+
+    auto getBodySizeFromRawRequest(std::string const& rawData)
+    {
+        const auto input = findAndReplaceAll(rawData, "\r\n", "\n");
+        return getHttpRequestBody(input).size();
+    }
 
     auto executeRequest(std::string const &method, std::string const &resource, std::string const &body)
     {
@@ -29,8 +39,10 @@ namespace own
         return response(501);
     }
 
-    auto proceedRequest(std::string const &input)
+    auto proceedRequest(std::string const &rawData)
     {
+        const auto input = own::findAndReplaceAll(rawData, "\r\n", "\n");
+
         const std::string header = getHttpRequestHeaders(input);
         if (header.empty())
         {
@@ -48,13 +60,16 @@ namespace own
         const std::string resource = headerFirstLine.at(1);
         const std::string body = getHttpRequestBody(input);
 
+        std::cout << "\n" << method << " " << resource << std::flush;
+
         // simple path traversal blocker
         if (resource.find("/../") != std::string::npos)
         {
             return response(403);
         }
 
-        const std::string response = executeRequest(method, resource, body);
+        std::string response = executeRequest(method, resource, body) + "\n";
+        response = own::findAndReplaceAll(response, "\n", "\r\n");
 
         return response;
     }
