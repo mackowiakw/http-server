@@ -30,5 +30,9 @@
 *.exe
 *.out
 *.app
+
 server/server
 server/main
+
+# SERVER_ROOT_FOLDER
+server/SERVER_ROOT_FOLDER
