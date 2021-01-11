@@ -7,7 +7,7 @@
 namespace own
 {
 
-    auto getHttpRequestHeaders(std::string const &input)
+    auto getHeadersFromRequest(std::string const &input)
     {
         std::string str2find("\n\n");
         std::size_t pos = input.find(str2find);
@@ -20,7 +20,7 @@ namespace own
         }
     }
 
-    auto getHttpRequestBody(std::string const &input)
+    auto getBodyFromRequest(std::string const &input)
     {
         std::string str2find("\n\n");
         std::size_t pos = input.find(str2find);
@@ -59,6 +59,12 @@ namespace own
         }
 
         return data;
+    }
+
+    auto getBodySizeFromRawRequest(std::string const& rawData)
+    {
+        const auto input = findAndReplaceAll(rawData, "\r\n", "\n");
+        return getBodyFromRequest(input).size();
     }
 
 } // namespace own
