@@ -2,8 +2,8 @@
 
 #include <ctime>
 #include <iomanip>
-#include <string>
 #include <sstream>
+#include <string>
 #include <unordered_map>
 
 namespace own
@@ -22,7 +22,7 @@ namespace own
             {403, "Forbidden"},
             {404, "Not Found"},
             {405, "Method Not Allowed"},
-            {500, "Internal Server Eror"},
+            {500, "Internal Server Error"},
             {501, "Not Implemented"},
         };
 

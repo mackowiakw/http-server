@@ -1,9 +1,9 @@
 #pragma once
 
-#include <fstream>
 #include <filesystem>
-#include <string>
+#include <fstream>
 #include <sstream>
+#include <string>
 
 #include "config.hpp"
 #include "httpResponse.cpp"
@@ -53,13 +53,13 @@ namespace own
             return response(304);
         }
 
-        // Assuming URL is a folderName if doesn't contain any '.' (dot) character
+        // Assuming URL is a folderName unless contains any '.' (dot) character
         if (URL.find(".") == std::string::npos) {
             try {
                 std::filesystem::create_directory(URL);
             }
-            catch (...) {
-                // Multiple Choices (Attempt to create many folders at one time)
+            catch (std::filesystem::filesystem_error &) {
+                // Multiple Choices (Create many folders at one time)
                 return response(300);
             }
 
@@ -78,7 +78,7 @@ namespace own
             return response(201) + headers.str();
         }
 
-        // Bad Request (Attempt to create a file in non existing folder)
+        // Bad Request (Create file in not existing directory)
         return response(400);
     }
 
@@ -90,7 +90,7 @@ namespace own
                 return response(200);
             }
         }
-        catch (...) {
+        catch (std::filesystem::filesystem_error &) {
             // Not Modified (Directory is not empty)
             return response(304);
         }

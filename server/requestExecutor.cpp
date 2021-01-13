@@ -25,7 +25,7 @@ namespace own
             return response(403);
         }
 
-        // Method Not Allowed
+        // Method Not Allowed (POST, PATCH and PUT)
         if (std::regex_match(method, std::regex("POST|PATCH|OPTIONS"))) {
             return response(405);
         }
@@ -45,7 +45,7 @@ namespace own
             return DELETE(URL);
         }
 
-        // Not Implemented (for not standard user-defined methods)
+        // Not Implemented (non standard (user-defined) methods)
         return response(501);
     }
 
