@@ -1,18 +1,19 @@
-#pragma once
-
 #include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <string>
 
 #include "config.hpp"
-#include "httpResponse.cpp"
-#include "stringHelper.cpp"
+#include "httpResponse.hpp"
+#include "stringHelper.hpp"
+
+#include "httpMethods.hpp"
+
 
 namespace own
 {
 
-    auto GET(std::string const &URL)
+    std::string GET(std::string const &URL)
     {
         if (std::string body; std::filesystem::is_directory(URL)) {
             body += URL.substr(ROOT_FOLDER.length()) + " is not a file, it's a directory";
@@ -40,14 +41,14 @@ namespace own
         return response(404);
     }
 
-    auto HEAD(std::string const &URL)
+    std::string HEAD(std::string const &URL)
     {
         // Same as GET but without response body
         // Important: newline at the EOF (body is removed with leading \n\n)
         return getHeadersFromRequest(GET(URL)) + "\n";
     }
 
-    auto PUT(std::string const &URL, std::string const &body)
+    std::string PUT(std::string const &URL, std::string const &body)
     {
         if (std::filesystem::exists(URL)) {
             return response(304);
@@ -82,7 +83,7 @@ namespace own
         return response(400);
     }
 
-    auto DELETE(std::string const &URL)
+    std::string DELETE(std::string const &URL)
     {
         try {
             if (std::filesystem::remove(URL)) {

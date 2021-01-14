@@ -1,15 +1,16 @@
-#pragma once
-
 #include <ctime>
 #include <iomanip>
 #include <sstream>
 #include <string>
 #include <unordered_map>
 
+#include "httpResponse.hpp"
+
+
 namespace own
 {
 
-    auto response(int const code)
+    std::string response(int const code)
     {
         const std::unordered_map<int, std::string> messages = {
             {200, "OK"},

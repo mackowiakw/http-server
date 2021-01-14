@@ -9,10 +9,10 @@
 #include <string>
 
 #include "config.hpp"
-#include "requestExecutor.cpp"
-#include "requestParser.cpp"
-#include "requestReader.cpp"
-#include "stringHelper.cpp"
+#include "requestExecutor.hpp"
+#include "requestParser.hpp"
+#include "requestReader.hpp"
+#include "stringHelper.hpp"
 
 struct cln
 {

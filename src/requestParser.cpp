@@ -1,15 +1,13 @@
-#pragma once
-
 #include <array>
 #include <iostream>
 #include <string>
 
-#include "stringHelper.cpp"
+#include "stringHelper.hpp"
 
 namespace own
 {
 
-    auto parseRequest(std::string const &rawData)
+    std::array<std::string, 4> parseRequest(std::string const &rawData)
     {
         const auto input = own::findAndReplaceAll(rawData, "\r\n", "\n");
 

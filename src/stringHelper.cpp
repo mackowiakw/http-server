@@ -1,13 +1,13 @@
-#pragma once
-
 #include <sstream>
 #include <string>
 #include <vector>
 
+#include "stringHelper.hpp"
+
 namespace own
 {
 
-    auto getHeadersFromRequest(std::string const &input)
+    std::string getHeadersFromRequest(std::string const &input)
     {
         std::string str2find("\n\n");
         std::size_t pos = input.find(str2find);
@@ -20,7 +20,7 @@ namespace own
         }
     }
 
-    auto getBodyFromRequest(std::string const &input)
+    std::string getBodyFromRequest(std::string const &input)
     {
         std::string str2find("\n\n");
         std::size_t pos = input.find(str2find);
@@ -33,7 +33,7 @@ namespace own
         }
     }
 
-    auto splitByDelimiter(std::string const &input, char const &delimiter)
+    std::vector<std::string> splitByDelimiter(std::string const &input, char const &delimiter)
     {
         std::stringstream ss(input);
         std::string tmp;
@@ -46,7 +46,7 @@ namespace own
         return words;
     }
 
-    auto findAndReplaceAll(std::string const& input, std::string const& toSearch, std::string const& replaceStr)
+    std::string findAndReplaceAll(std::string const& input, std::string const& toSearch, std::string const& replaceStr)
     {
         std::string data{ input };
         size_t pos = data.find(toSearch);
@@ -61,7 +61,7 @@ namespace own
         return data;
     }
 
-    auto getBodySizeFromRawRequest(std::string const& rawData)
+    size_t getBodySizeFromRawRequest(std::string const& rawData)
     {
         const auto input = findAndReplaceAll(rawData, "\r\n", "\n");
         return getBodyFromRequest(input).size();

@@ -1,17 +1,18 @@
-#pragma once
-
 #include <array>
 #include <string>
 #include <regex>
 
-#include "httpMethods.cpp"
-#include "httpResponse.cpp"
+#include "httpMethods.hpp"
+#include "httpResponse.hpp"
 #include "config.hpp"
+
+#include "requestExecutor.hpp"
+
 
 namespace own
 {
     
-    auto executeRequest(std::array<std::string, 4> const& params)
+    std::string executeRequest(std::array<std::string, 4> const& params)
     {
         const auto [method, resource, version, body] = params;
 

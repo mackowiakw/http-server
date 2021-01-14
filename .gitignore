@@ -31,8 +31,8 @@
 *.out
 *.app
 
-server/server
-server/main
+bin/main
+
 
 # SERVER_ROOT_FOLDER
-server/SERVER_ROOT_FOLDER
+SERVER_ROOT_FOLDER

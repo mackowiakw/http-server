@@ -8,7 +8,7 @@
             "name": "g++ - Build and debug active project",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/server.out",
+            "program": "${workspaceFolder}/bin/main",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

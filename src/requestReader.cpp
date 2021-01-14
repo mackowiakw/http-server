@@ -1,17 +1,17 @@
-#pragma once
-
 #include <sstream>
 #include <string>
 #include <vector>
 
 #include <unistd.h>
 
-#include "stringHelper.cpp"
+#include "stringHelper.hpp"
+
+#include "requestReader.hpp"
 
 namespace own
 {
 
-    auto readRawRequestFromSocket(const int cfd)
+    std::string readRawRequestFromSocket(const int cfd)
     {
         // 1450 due to TCP MTU
         char buffer[1450] = {};
