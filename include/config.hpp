@@ -1,4 +1,6 @@
+#pragma once
 #include <string>
+#include "httpMethods.hpp"
 
 // namespace own { 
     const int SERVER_PORT{ 1234 };
