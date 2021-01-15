@@ -2,11 +2,10 @@
 #include <string>
 #include <regex>
 
+#include "requestExecutor.hpp"
 #include "httpMethods.hpp"
 #include "httpResponse.hpp"
 #include "config.hpp"
-
-#include "requestExecutor.hpp"
 
 
 namespace own

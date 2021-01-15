@@ -1,12 +1,11 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
 #include <unistd.h>
 
+#include "requestReader.hpp"
 #include "stringHelper.hpp"
 
-#include "requestReader.hpp"
 
 namespace own
 {

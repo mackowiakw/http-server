@@ -4,6 +4,7 @@
 
 #include "stringHelper.hpp"
 
+
 namespace own
 {
 

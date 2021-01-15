@@ -3,11 +3,11 @@
 #include <sstream>
 #include <string>
 
+#include "httpMethods.hpp"
 #include "config.hpp"
 #include "httpResponse.hpp"
 #include "stringHelper.hpp"
 
-#include "httpMethods.hpp"
 
 
 namespace own
@@ -16,7 +16,7 @@ namespace own
     std::string GET(std::string const &URL)
     {
         if (std::string body; std::filesystem::is_directory(URL)) {
-            body += URL.substr(ROOT_FOLDER.length()) + " is not a file, it's a directory";
+            body += URL.substr(own::ROOT_FOLDER.length()) + " is not a file, it's a directory";
 
             std::stringstream headers;
             headers << "Content-Type: text/plain; charset=ASCII\n";

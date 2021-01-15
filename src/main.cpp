@@ -1,18 +1,18 @@
+#include <iostream>
+#include <array>
+#include <string>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <pthread.h>
 
-#include <array>
-#include <iostream>
-#include <string>
-
 #include "config.hpp"
 #include "requestExecutor.hpp"
 #include "requestParser.hpp"
 #include "requestReader.hpp"
 #include "stringHelper.hpp"
+
 
 struct cln
 {
@@ -37,7 +37,7 @@ void *cthread(void *arg)
 
 int main(int argc, char **argv)
 {
-    std::cout << "Server is running at: http://localhost:" << SERVER_PORT << "\n" << std::flush;
+    std::cout << "Server is running at: http://localhost:" << own::SERVER_PORT << "\n" << std::flush;
 
     pthread_t tid;
     socklen_t slt;
@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 
     saddr.sin_family = AF_INET;
     saddr.sin_addr.s_addr = INADDR_ANY;
-    saddr.sin_port = htons(SERVER_PORT);
+    saddr.sin_port = htons(own::SERVER_PORT);
     sfd = socket(AF_INET, SOCK_STREAM, 0);
     setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, (char *)&on, sizeof(on));
     bind(sfd, (struct sockaddr *)&saddr, sizeof(saddr));
