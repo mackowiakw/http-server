@@ -3,7 +3,7 @@
 
 - Only text files are operated. **Content-Type** header is attached only to text files, so browsers cannot read images properly
 
-- It's runnig on localhost (fits for my purpose), but is is possible to easy extend its working area
+- It's runnig on localhost (fits for my purpose), but is is possible to easily extend its working area
 
 - Served files are placed in `SERVER_ROOT_FOLDER` (you can change this in include/config.hpp)
 
@@ -35,7 +35,7 @@ Otherwise skip this command and continue in Linux shell. Then open in VS Code:
 code .
 ```
 
-And just hit **F5**. Server is now available at: http://localhost:1234
+And just hit **F5**. Server is now available at: http://localhost:8080
 
 
 ### You can also compile it manually:
