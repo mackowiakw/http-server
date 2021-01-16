@@ -5,6 +5,6 @@
 namespace own
 {
 
-    std::array<std::string, 4> parseRequest(std::string const& rawData);
+    [[nodiscard]] std::array<std::string, 4> parseRequest(std::string const& rawData);
     
 } // namespace own

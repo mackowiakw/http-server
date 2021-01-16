@@ -4,6 +4,6 @@
 namespace own
 {
 
-    std::string readRawRequestFromSocket(const int cfd);
+    [[nodiscard]] std::string readRawRequestFromSocket(const int cfd);
 
 } // namespace own
