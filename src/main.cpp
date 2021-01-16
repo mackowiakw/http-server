@@ -26,8 +26,8 @@ void *cthread(void *arg)
 
     const auto request = own::readRawRequestFromSocket(c->cfd);
     const auto params = own::parseRequest(request);
-    auto response = own::executeRequest(params) + "\n";
-    response = own::findAndReplaceAll(response, "\n", "\r\n");
+    auto response = own::executeRequest(params);
+    response = own::encodeNewlinesInResponseHeaders(response);
 
     size_t sentBytes = 0;
     while (sentBytes < response.size()) {

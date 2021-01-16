@@ -44,6 +44,9 @@ namespace own
             words.push_back(tmp);
         }
 
+        // prevents of returning empty vector
+        words.push_back(std::string{ "" });
+
         return words;
     }
 
@@ -60,6 +63,14 @@ namespace own
         }
 
         return data;
+    }
+
+    std::string encodeNewlinesInResponseHeaders(std::string const& input)
+    {
+        std::string headers = getHeadersFromRequest(input) + "\n\n";
+        headers = findAndReplaceAll(headers, "\n", "\r\n");
+
+        return headers + getBodyFromRequest(input);
     }
 
     size_t getBodySizeFromRawRequest(std::string const& rawData)
