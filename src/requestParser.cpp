@@ -15,6 +15,11 @@ namespace own
         const auto headers = getHeadersFromRequest(input);
         const auto mainHeader = splitByDelimiter(headers, '\n');
 
+        if (mainHeader.size() == 0) {
+            std::string _{ "" };
+            return std::array{ _, _, _, _ };
+        }
+
         auto headerFirstLine = splitByDelimiter(mainHeader.at(0), ' ');
 
         // That's because first line of request must contain exactly 3 words

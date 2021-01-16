@@ -1,6 +1,7 @@
 #include <filesystem>
 #include <fstream>
 #include <sstream>
+#include <regex>
 #include <string>
 
 #include "httpMethods.hpp"
@@ -9,17 +10,15 @@
 #include "stringHelper.hpp"
 
 
-
 namespace own
 {
 
-    std::string GET(std::string const &URL)
+    std::string GET(std::string const& URL, const bool isHEAD)
     {
         if (std::string body; std::filesystem::is_directory(URL)) {
             body += URL.substr(own::ROOT_FOLDER.length()) + " is not a file, it's a directory";
 
             std::stringstream headers;
-            headers << "Content-Type: text/plain; charset=ASCII\n";
             headers << "Content-Length: " << body.size() << "\n\n";
 
             // Found (resource is a directory, not a file)
@@ -27,13 +26,33 @@ namespace own
         }
 
         if (std::stringstream headers; std::filesystem::exists(URL)) {
-            headers << "Content-Type: text/plain; charset=ASCII\n";
+            const auto fileType = URL.substr(URL.rfind('.') + 1);
+
+            std::string contentType;
+            if (std::regex_match(fileType, std::regex("png|jpg|jpeg"))) {
+                contentType = "image/" + fileType;
+            }
+            else if (std::regex_match(fileType, std::regex("mp4"))) {
+                contentType = "video/mp4";
+            }
+            else if (std::regex_match(fileType, std::regex("pdf"))) {
+                contentType = "application/pdf";
+            }
+            else {
+                contentType = "text/plain; charset=UTF-8";
+            }
+
+            headers << "Content-Type: " << contentType << "\n";
             headers << "Content-Length: " << std::filesystem::file_size(URL) << "\n\n";
 
             std::stringstream body;
             body << std::ifstream(URL).rdbuf();
 
             // OK (Succes)
+            if (isHEAD) {
+                return response(200) + headers.str();
+            }
+
             return response(200) + headers.str() + body.str();
         }
 
@@ -41,14 +60,13 @@ namespace own
         return response(404);
     }
 
-    std::string HEAD(std::string const &URL)
+    std::string HEAD(std::string const& URL)
     {
         // Same as GET but without response body
-        // Important: newline at the EOF (body is removed with leading \n\n)
-        return getHeadersFromRequest(GET(URL)) + "\n";
+        return GET(URL, true);
     }
 
-    std::string PUT(std::string const &URL, std::string const &body)
+    std::string PUT(std::string const& URL, std::string const& body)
     {
         if (std::filesystem::exists(URL)) {
             return response(304);
@@ -59,7 +77,7 @@ namespace own
             try {
                 std::filesystem::create_directory(URL);
             }
-            catch (std::filesystem::filesystem_error &) {
+            catch (std::filesystem::filesystem_error&) {
                 // Multiple Choices (Create many folders at one time)
                 return response(300);
             }
@@ -83,7 +101,7 @@ namespace own
         return response(400);
     }
 
-    std::string DELETE(std::string const &URL)
+    std::string DELETE(std::string const& URL)
     {
         try {
             if (std::filesystem::remove(URL)) {
@@ -91,7 +109,7 @@ namespace own
                 return response(200);
             }
         }
-        catch (std::filesystem::filesystem_error &) {
+        catch (std::filesystem::filesystem_error&) {
             // Not Modified (Directory is not empty)
             return response(304);
         }

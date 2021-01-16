@@ -1,7 +1,7 @@
 # http-server
 - Simple HTTP server for Linux written in modern C++
 
-- Only text files are operated. **Content-Type** header is attached only to text files, so browsers cannot read images properly
+- Text, imgage, video and pdf files are operated. In this cases proper *Content-Type* header is attached to response.
 
 - It's runnig on localhost (fits for my purpose), but is is possible to easily extend its working area
 
