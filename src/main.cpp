@@ -29,7 +29,11 @@ void *cthread(void *arg)
     auto response = own::executeRequest(params) + "\n";
     response = own::findAndReplaceAll(response, "\n", "\r\n");
 
-    write(c->cfd, response.c_str(), response.size());
+    size_t sentBytes = 0;
+    while (sentBytes < response.size()) {
+        sentBytes += write(c->cfd, response.c_str() + sentBytes, response.size() - sentBytes);
+    }
+    
     close(c->cfd);
     free(c);
     return EXIT_SUCCESS;
