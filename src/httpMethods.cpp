@@ -41,6 +41,9 @@ namespace own
             else if (std::regex_match(fileType, std::regex("pdf"))) {
                 contentType = "application/pdf";
             }
+            else if (std::regex_match(fileType, std::regex("html"))) {
+                contentType = "text/html";
+            }
             else {
                 contentType = "text/plain; charset=UTF-8";
             }
